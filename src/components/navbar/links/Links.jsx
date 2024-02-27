@@ -4,7 +4,7 @@ import { useState } from "react";
 import NavLink from "./navLink/NavLink";
 import styles from "./links.module.css";
 
-const Links = () => {
+const Links = ({ session, handleGithubLogout }) => {
   const links = [
     {
       title: "Homepage",
@@ -24,7 +24,6 @@ const Links = () => {
     },
   ];
   const [open, setOpen] = useState(false);
-  const session = true;
   const isAdmin = true;
   return (
     <div className={styles.container}>
@@ -32,10 +31,12 @@ const Links = () => {
         {links?.map((item) => (
           <NavLink item={item} key={item.title} />
         ))}
-        {session ? (
+        {session?.user ? (
           <>
-            {isAdmin && <NavLink item={{ title: "Admin", path: "/admin" }} />}
-            <button className={styles.logout}>Logout</button>
+            {session.user?.isAdmin && <NavLink item={{ title: "Admin", path: "/admin" }} />}
+            <form action={handleGithubLogout}>
+              <button className={styles.logout}>Logout</button>
+            </form>
           </>
         ) : (
           <NavLink item={{ title: "Login", path: "/login" }} />
