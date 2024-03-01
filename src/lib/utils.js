@@ -16,3 +16,6 @@ export const connectToDb = async () => {
     throw new Error(error);
   }
 };
+
+
+
